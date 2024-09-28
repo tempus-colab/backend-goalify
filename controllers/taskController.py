@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from models.task  import  Task
+from models.goal import Goal
 from marshmallow import ValidationError
 from caching import cache       
 
@@ -25,27 +26,27 @@ def add_task(task_id):
 
 
 
-def get_tasks_for_goal(task_id):
-    task = Task.query.get(task_id)
+def get_tasks_for_goal(goal_id):
+    goal = Goal.query.get(goal_id)
 
-    if not task:
+    if not goal:
         return jsonify({'message': 'task not found'}), 404
 
     organized_tasks = [
         {
-            'Task ID': task.task_id,
+            'Task ID': task.goal_id,
             'Description': task.task_description,
             'Due Date': task.due_date.strftime('%Y-%m-%d'),
             'Status': task.status
         } 
-        for task in task.tasks
+        for task in goal.tasks
     ]
 
     return jsonify({
-        'task': {
-            'task ID': task.task_id,
-            'Title': task.title,
-            'Description': task.description
+        'goal': {
+            'goal ID': goal.goal_id,
+            'Title': goal.title,
+            'Description': goal.description
         },
         'Tasks': organized_tasks
     })

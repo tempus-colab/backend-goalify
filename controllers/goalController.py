@@ -3,7 +3,7 @@ from flask import jsonify, request
 from models.goal import Goal
 from marshmallow import ValidationError
 from caching import cache
-from utils.utils import serialize_model
+from utils.utils import serialize_model, serialize_goal, validate_goal_data
 
 
 
