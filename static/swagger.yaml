@@ -1,0 +1,446 @@
+swagger: '2.0'
+info:
+  title: "GOALIFY API"
+  description: "
+  This is the API documentation for the Goalify API.
+  version: "1.0.0"
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+
+paths:
+# ========================================================================================================
+# GETTING ALL GOALS
+  /goals:
+    get:
+      tags:
+        - goals
+      summary: "Get all goals"
+      description: "Endpoint for getting all goals"
+      responses:
+        200:
+          description: "List of all goals"
+          schema:
+            $ref: "#/definitions/GoalsResponse"
+          examples:
+            application/json:
+              goals:
+                - goal_id: 1
+                  title: "Goal 1"
+                  description: "Description of goal 1"
+                  start_date: "2021-01-01"
+                  end_date: "2021-12-31"
+                  reminder_time: "08:00:00"
+                  status: "In Progress"
+
+    post:
+      tags:
+        - goals 
+      summary: "Create a goal"
+      description: "Endpoint for creating a goal"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Goal object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/GoalPayload"
+      responses:
+        200:
+          description: "Goal created successfully"
+          schema:
+            $ref: "#/definitions/GoalResponse"
+          examples:
+            application/json:
+              goal:
+                goal_id: 1
+                title: "Goal 1"
+                description: "Description of goal 1"
+                start_date: "2021-01-01"
+                end_date: "2021-12-31"
+                reminder_time: "08:00:00"
+                status: "In Progress"
+
+
+# UPDATING A GOAL
+
+  /goals/<int:goal_id>:
+    put:
+      tags:
+        - goals 
+      summary: "Update a goal"
+      description: "Endpoint for updating a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to update"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "body"
+          description: "Goal object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/GoalPayload"
+      responses:
+        200:
+          description: "Goal updated successfully"
+          schema:
+            $ref: "#/definitions/GoalResponse"
+          examples:
+          examples:
+            application/json:
+              goals:
+                - goal_id: 1
+                  title: "Goal 1"
+                  description: "Description of goal 1"
+                  start_date: "2021-01-01"
+                  end_date: "2021-12-31"
+                  reminder_time: "08:00:00"
+                  status: "In Progress"
+
+
+# DELETING A GOAL
+    delete:
+      tags:
+        - goals 
+      summary: "Delete a goal"
+      description: "Endpoint for deleting a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to delete"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Goal deleted successfully"
+          schema:
+            $ref: "#/definitions/GoalResponse"
+          examples:
+            application/json:
+              goals:
+                - goal_id: 1
+                  title: "Goal 1"
+                  description: "Description of goal 1"
+                  start_date: "2021-01-01"
+                  end_date: "2021-12-31"
+                  reminder_time: "08:00:00"
+                  status: "In Progress"
+
+
+
+# =======================================================================================================
+
+#TASKS
+# ADDING A TASK
+  /task/<int:goal_id>/tasks:
+    post:
+      tags:
+        - tasks 
+      summary: "Create a task for a goal"
+      description: "Endpoint for creating a task for a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to create task for"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "body"
+          description: "Task object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/TaskPayload"
+      responses:
+        200:
+          description: "Task created successfully"
+          schema:
+            $ref: "#/definitions/TaskResponse"
+          examples:
+            application/json:
+              task:
+                task_id: 1
+                goal_id: 1
+                task_description: "Description of task 1"
+                due_date: "2021-01-01"
+                status: "In Progress"
+            
+#GETTING A TASK
+  /task/<int:goal_id>/tasks:
+    get:
+      tags:
+        - tasks 
+      summary: "Get all tasks for a goal"
+      description: "Endpoint for getting all tasks for a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to get tasks for"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "List of all tasks for a goal"
+          schema:
+            $ref: "#/definitions/TasksResponse"
+          examples:
+            application/json:
+              task:
+                task_id: 1
+                goal_id: 1
+                task_description: "Description of task 1"
+                due_date: "2021-01-01"
+                status: "In Progress"
+
+# UPDATING A TASK
+  /task/<int:goal_id>/tasks/<int:task_id>:
+    put:
+      tags:
+        - tasks 
+      summary: "Update a task for a goal"
+      description: "Endpoint for updating a task for a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to update task for"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "task_id"
+          description: "ID of task to update"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "body"
+          description: "Task object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/TaskPayload"
+      responses:
+        200:
+          description: "Task updated successfully"
+          schema:
+            $ref: "#/definitions/TaskResponse"
+          examples:
+            application/json:
+              task:
+                task_id: 1
+                goal_id: 1
+                task_description: "Description of task 1"
+                due_date: "2021-01-01"
+                status: "In Progress"
+
+# DELETING A TASK
+    delete:
+      tags:
+        - tasks 
+      summary: "Delete a task for a goal"
+      description: "Endpoint for deleting a task for a goal"
+      parameters:
+        - in: "path"
+          name: "goal_id"
+          description: "ID of goal to delete task for"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "task_id"
+          description: "ID of task to delete"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Task deleted successfully"
+          schema:
+            $ref: "#/definitions/TaskResponse"
+          examples:
+            application/json:
+              task:
+                task_id: 1
+                goal_id: 1
+                task_description: "Description of task 1"
+                due_date: "2021-01-01"
+                status: "In Progress"
+
+# =======================================================================================================
+#USERS
+#CREATING A USER
+  /users:
+    post:
+      tags:
+        - users 
+      summary: "Create a user"
+      description: "Endpoint for creating a user" 
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/UserPayload"
+      responses:
+        200:
+          description: "User created successfully"
+          schema:
+            $ref: "#/definitions/UserResponse"
+          examples:
+            application/json:
+              user:
+                id: 1
+                username: "user1"
+                email: "user email"
+                password: "user password"
+
+
+# USER LOGIN
+  /users/login:
+    post:
+      tags:
+        - users 
+      summary: "Login Endpoint (No token needed)"
+      description: "Endpoint for user authentication, no token needed"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for login"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginPayload"
+      responses:
+        200:
+          description: "Login Successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          examples:
+            application/json:
+              message: "Successfully logged In"
+              status: "Success"
+
+
+# =======================================================================================================
+# PAYLOADS:
+    
+definitions:
+  UserPayload:
+    type: "object"
+    properties:
+      user_id:
+        type: "integer"
+        description: "ID of the user"
+      username:
+        type: "string"
+        description: "username"
+      password:
+        type: "string"
+        description: "password"
+    required:
+      - "username"
+      - "password"
+
+  LoginPayload:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "username"
+      password:
+        type: "string"
+        description: "password"
+    required:
+      - "username"
+      - "password"
+  
+  LoginResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        description: "Successfully logged In"
+      status:
+        type: "string"
+        description: "success"
+  
+  GoalPayload:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        description: "Title of the goal"
+      description:
+        type: "string"
+        description: "Description of the goal"
+      start_date:
+        type: "string"
+        format: "date"
+        description: "Start date of the goal"
+      end_date:
+        type: "string"
+        format: "date"
+        description: "End date of the goal"
+      reminder_time:
+        type: "string"
+        format: "time"
+        description: "Time of the reminder"
+    required:
+      - "title"
+
+  GoalResponse:
+    type: "object"
+    properties:
+      goal_id:
+        type: "integer"
+        description: "ID of the goal"
+      title:
+        type: "string"
+        description: "Title of the goal"
+      description:
+        type: "string"
+        description: "Description of the goal"
+      start_date:
+        type: "string"
+        format: "date"
+        description: "Start date of the goal"
+      end_date:
+        type: "string"
+        format: "date"
+        description: "End date of the goal"
+      reminder_time:
+        type: "string"
+        format: "time"
+        description: "Time of the reminder"
+
+  TaskPayload:
+    type: "object"
+    properties:
+      task_id:
+        type: "integer"
+        description: "ID of the task"
+      goal_id:
+        type: "integer"
+        description: "ID of the goal"
+      task_description:
+        type: "string"
+        description: "Description of the task"
+      due_date:
+        type: "string"
+        format: "date"
+        description: "Due date of the task"
+    required:
+      - "goal_id"
+      - "task_description"
+      - "due_date"
+
+
+
+
+
