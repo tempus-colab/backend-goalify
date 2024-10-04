@@ -5,6 +5,13 @@ from caching import cache
 from routes.userBP import user_blueprint
 from routes.taskBP import task_routes
 from routes.goalBP import goal_routes
+from flask_swagger_ui import get_swaggerui_blueprint
+
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.yaml'
+
+swagger_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name':"GOALIFY"})
+
 
 
 def create_app(config_name):
@@ -24,6 +31,7 @@ def blueprint_config(app):
     app.register_blueprint(goal_routes)
     app.register_blueprint(task_routes)
     app.register_blueprint(user_blueprint)
+    app.register_blueprint(swagger_blueprint, url_prefix=SWAGGER_URL)
 
 
 if __name__ == '__main__':
