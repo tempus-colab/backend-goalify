@@ -1,8 +1,7 @@
 swagger: '2.0'
 info:
   title: "GOALIFY API"
-  description: "
-  This is the API documentation for the Goalify API.
+  description: "This is the API documentation for the Goalify API."
   version: "1.0.0"
 host: "127.0.0.1:5000"
 schemes:
@@ -98,7 +97,6 @@ paths:
           schema:
             $ref: "#/definitions/GoalResponse"
           examples:
-          examples:
             application/json:
               goals:
                 - goal_id: 1
@@ -145,6 +143,7 @@ paths:
 #TASKS
 # ADDING A TASK
   /task/<int:goal_id>/tasks:
+    #CREATING A TASK
     post:
       tags:
         - tasks 
@@ -175,9 +174,7 @@ paths:
                 task_description: "Description of task 1"
                 due_date: "2021-01-01"
                 status: "In Progress"
-            
-#GETTING A TASK
-  /task/<int:goal_id>/tasks:
+    #GETTING A TASK
     get:
       tags:
         - tasks 
