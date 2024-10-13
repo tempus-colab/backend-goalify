@@ -13,17 +13,14 @@ API_URL = '/static/swagger.yaml'
 swagger_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name':"GOALIFY"})
 
 
-
-def create_app(config_name):
-
+def create_app():
     app = Flask(__name__)
-
-    app.config.from_object(f'config.{config_name}')
+    app.config.from_object(f'config.ApplicationConfiguration')
     db.init_app(app)
     cache.init_app(app)
     CORS(app)
 
-    print('Running')
+    print('Server started')
 
     return app
 
@@ -39,5 +36,4 @@ if __name__ == '__main__':
     blueprint_config(app)
     with app.app_context():
         db.create_all()
-
-app.run(debug=True)  
+    app.run(debug=True)  

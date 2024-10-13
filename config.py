@@ -1,11 +1,6 @@
 import os
 
-class DevelopmentConfig:
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:Mysql24$@localhost/bes_ecomm'
-    CACHE_TYPE = 'SimpleCache'
-    DEBUG = True
-
-class ProductionConfig:
+class ApplicationConfiguration:
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///app.db'
-    CACHE_TYPE = 'SimpleCache'
-    DEBUG = False
+    CACHE_TYPE =  os.environ.get('CACHE_TYPE') or 'SimpleCache'
+    DEBUG = os.environ.get('ENV') != 'production'
