@@ -9,8 +9,6 @@ on:
   - cron: "0 2 * * 1-5"
 
 jobs:
-
-jobs:
   build:
     runs-on: ubuntu-latest
     steps:
