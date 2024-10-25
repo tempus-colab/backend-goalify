@@ -5,6 +5,7 @@ from caching import cache
 from routes.userBP import user_blueprint
 from routes.taskBP import task_routes
 from routes.goalBP import goal_routes
+from flasgger import Swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 
 SWAGGER_URL = '/api/docs'
